@@ -6,20 +6,16 @@ services:
     container_name: jenkins
     build:
         context: .
-    labels:
-      kompose.service.type: nodeport
     ports:
       - '8080:8080'
-      - '8443:8443'
+#     - '8443:8443'
       - '50000:50000'
     environment:
       JENKINS_URL: http://localhost:8080/
       JENKINS_HOME: /var/lib/jenkins/
       DOCKER_HOST: tcp://proxy1:2375
     volumes:
-      - jenkins_data:/var/lib/jenkins
-      # - /var/run/docker.sock:/var/run/docker.sock
-      # cmd: echo ${JENKINS_HOME}/secrets/initialAdminPassword
+      - jenkins_data: /var/lib/jenkins
     restart: unless-stopped
     networks:
       - jenkins-net
