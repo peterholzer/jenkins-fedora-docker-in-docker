@@ -1,0 +1,47 @@
+version: '2'
+
+services:
+
+  jenkins:
+    container_name: jenkins
+    build:
+        context: .
+    labels:
+      kompose.service.type: nodeport
+    ports:
+      - '8080:8080'
+      - '8443:8443'
+      - '50000:50000'
+    # volumes:
+      # - jenkins_data:/jenkins_config
+      # - jenkins_data:/var/lib/jenkins
+      # - /usr/bin/docker:/usr/bin/docker
+      # - /var/run/docker.sock:/var/run/docker.sock
+      # - /usr/lib/libltdl.so.7:/usr/lib/libltdl.so.7.3.1
+      # /var/jenkins_home/secrets/initialAdminPassword
+    environment:
+      JENKINS_URL: http://localhost:8080/
+      DOCKER_HOST: tcp://proxy1:2375
+    restart: unless-stopped
+    networks:
+      - jenkins-net
+    depends_on:
+      - docker_socket_proxy
+
+  docker_socket_proxy:
+    build:
+      context: .
+      dockerfile: docker-socket-proxy.Dockerfile
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      jenkins-net:
+        aliases:
+          - proxy1
+
+volumes:
+  jenkins_data:
+    driver: local
+
+networks:
+  jenkins-net:
