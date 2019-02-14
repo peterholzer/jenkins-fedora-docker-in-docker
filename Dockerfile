@@ -19,6 +19,7 @@ ADD https://raw.githubusercontent.com/jenkinsci/docker/master/jenkins-support   
 RUN chmod 755 /usr/local/bin/*
 
 USER jenkins
+
 ENV JENKINS_HOME=/var/lib/jenkins/
 ENV REF=${JENKINS_HOME}/plugins/
 ENV JENKINS_UC="https://updates.jenkins.io"
@@ -28,20 +29,10 @@ ENV JENKINS_UC_EXPERIMENTAL="https://updates.jenkins.io/experimental"
 
 
 # Install plugins
-RUN install-plugins.sh \
-    build-timeout:latest \
-    cloudbees-folder:latest \
-    dashboard-view:latest \
-    git:latest \
-    git-changelog:latest \
-    workflow-aggregator:latest \
-    pipeline-stage-view:latest \
-    ssh-slaves:latest \
-    timestamper:latest \
-    ws-cleanup:latest
+COPY ./plugins.txt
+RUN install-plugins.sh < plugins.txt
 
 VOLUME ${JENKINS_HOME}
-
 
 EXPOSE 8080
 
