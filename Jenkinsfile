@@ -8,7 +8,7 @@ pipeline {
         }
         stage('Test docker') {
             steps {
-                sh 'DOCKER_HOST=tcp://proxy1:2375 docker version'
+                sh 'DOCKER_HOST= docker version'
             }
         }
     }
