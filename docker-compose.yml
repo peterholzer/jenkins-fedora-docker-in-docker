@@ -15,7 +15,7 @@ services:
       JENKINS_HOME: /var/lib/jenkins/
       DOCKER_HOST: tcp://proxy1:2375
     volumes:
-      - jenkins_data: /var/lib/jenkins
+      - jenkins_data:/var/lib/jenkins
     restart: unless-stopped
     networks:
       - jenkins-net
