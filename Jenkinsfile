@@ -6,9 +6,14 @@ pipeline {
                 sh 'java -version'
             }
         }
-        stage('Test docker') {
+        stage('Test docker client') {
             steps {
-                sh 'DOCKER_HOST= docker version'
+                sh 'docker -v'
+            }
+        }
+        stage('Test docker daemon') {
+            steps {
+                sh 'docker version || true'
             }
         }
     }
