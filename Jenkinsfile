@@ -1,10 +1,14 @@
 pipeline {
     agent { dockerfile true }
     stages {
-        stage('Test') {
+        stage('Test java') {
             steps {
                 sh 'java -version'
-                sh 'docker version'
+            }
+        }
+        stage('Test docker') {
+            steps {
+                sh 'docker version || true'
             }
         }
     }
