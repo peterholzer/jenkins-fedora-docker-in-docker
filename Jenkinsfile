@@ -37,13 +37,11 @@ pipeline {
 node {
     checkout scm
 
-
-
     stage("Setup mysql") {
         docker.image('mysql:5').withRun('-e "MYSQL_ROOT_PASSWORD=my-secret-pw"') { c ->
 
             stage("Run mysql") {
-                docker.image('mysql:5').inside("--link ${c.id}:db") {
+                docker.image('mysql:5').inside("--link ${c.id}:db") {je
                     /* Wait until mysql service is up */
                     sh 'while ! mysqladmin ping -hdb --silent; do sleep 1; done'
                 }
@@ -58,7 +56,8 @@ node {
                 }
             }
             stage("Run custom") {
-                def customImage = docker.build("my-image:${env.BUILD_ID}")
+                def customImage1 = docker.build("jenkins:${env.BUILD_ID}")
+                def customImage = docker.build("docker-socket-proxy:${env.BUILD_ID}", "-f docker-socket-proxy.Dockerfile .")
                 customImage.inside("--link ${c.id}:db") {
                     /*
                      * Run some tests which require MySQL, and assume that it is
