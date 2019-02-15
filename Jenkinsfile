@@ -82,6 +82,7 @@ node {
                 sh 'uname'
                 sh 'java -version'
             }
+            proxy_img.stop()
         }
     }
 }
