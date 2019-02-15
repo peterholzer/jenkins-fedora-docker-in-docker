@@ -37,8 +37,10 @@ pipeline {
 node {
     checkout scm
 
+    def customImage1
+
     stage("Build jenkins image") {
-        def customImage1 = docker.build("jenkins:${env.BUILD_ID}")
+        customImage1 = docker.build("jenkins:${env.BUILD_ID}")
 
     }
     stage("Build docker-socket-proxy image") {
