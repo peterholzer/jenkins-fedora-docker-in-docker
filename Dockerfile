@@ -18,7 +18,6 @@ ENV JENKINS_HOME=/var/lib/jenkins/
 # Add scripts from git repo of the original Jenkins docker image
 ADD https://raw.githubusercontent.com/jenkinsci/docker/master/install-plugins.sh /usr/local/bin/install-plugins.sh
 ADD https://raw.githubusercontent.com/jenkinsci/docker/master/jenkins-support    /usr/local/bin/jenkins-support
-COPY ./docker                                                                    /usr/local/bin/docker
 RUN chmod 755 /usr/local/bin/*
 COPY ./basic-security.groovy ${JENKINS_HOME}/init.groovy.d/
 
