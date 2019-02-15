@@ -76,6 +76,14 @@ node {
     }
     stage("Run custom") {
         // def customImage = docker.build("docker-socket-proxy:${env.BUILD_ID}", "-f docker-socket-proxy.Dockerfile .")
+        proxy_img.inside('-v /var/run/docker.sock:/var/run/docker.sock') {
+            sh 'uname'
+            sh 'docker -v'
+            sh 'docker version'
+        }
+    }
+    stage("Run custom") {
+        // def customImage = docker.build("docker-socket-proxy:${env.BUILD_ID}", "-f docker-socket-proxy.Dockerfile .")
         proxy_img.withRun('-v /var/run/docker.sock:/var/run/docker.sock') { d ->
             proxy_img.run()
             jenkins_img.inside("--link ${d.id}:db") {
