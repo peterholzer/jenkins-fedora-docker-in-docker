@@ -10,7 +10,7 @@ pipeline {
             steps {
                 sh 'docker -v'
             }
-        }
+        }/*
         stage('Test docker daemon (always true)') {
             steps {
 
@@ -19,7 +19,7 @@ pipeline {
                 }
                 echo currentBuild.result
             }
-        }
+        }*/
         stage('other') {
             agent {
                 docker { image 'node:7-alpine' }
