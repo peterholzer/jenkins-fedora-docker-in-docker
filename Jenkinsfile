@@ -37,6 +37,7 @@ pipeline {
 node {
     checkout scm
 
+        stage("Build") {
     docker.image('mysql:5').withRun('-e "MYSQL_ROOT_PASSWORD=my-secret-pw"') { c ->
 
         stage("Build") {
@@ -54,5 +55,6 @@ node {
                 sh 'uname'
             }
         }
+    }
     }
 }
