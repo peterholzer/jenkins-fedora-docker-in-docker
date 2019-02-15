@@ -1,0 +1,14 @@
+ansicolor:latest
+ansible:latest
+ansible-tower:latest
+build-timeout:latest
+cloudbees-folder:latest
+configuration-as-code:latest
+dashboard-view:latest
+git:latest
+git-changelog:latest
+workflow-aggregator:latest
+pipeline-stage-view:latest
+ssh-slaves:latest
+timestamper:latest
+ws-cleanup:latest
