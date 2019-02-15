@@ -45,15 +45,15 @@ node {
         def customImage = docker.build("docker-socket-proxy:${env.BUILD_ID}", "-f docker-socket-proxy.Dockerfile .")
     }
     // stage("Setup mysql") {
-        docker.image('mysql:5').withRun('-e "MYSQL_ROOT_PASSWORD=my-secret-pw"') {
+        docker.image('mysql:5').withRun('-e "MYSQL_ROOT_PASSWORD=my-secret-pw"') { c ->
 
-            stage("Run mysql") {
-                c -> docker.image('mysql:5').inside("--link ${c.id}:db") {
+            // stage("Run mysql") {
+                docker.image('mysql:5').inside("--link ${c.id}:db") {
                     /* Wait until mysql service is up */
                     sh 'while ! mysqladmin ping -hdb --silent; do sleep 1; done'
                 }
-            }
-            stage("Run centos") {
+            // }
+            // stage("Run centos") {
                 docker.image('centos:7').inside("--link ${c.id}:db") {
                     /*
                      * Run some tests which require MySQL, and assume that it is
@@ -61,7 +61,7 @@ node {
                      */
                     sh 'uname'
                 }
-            }
+            // }
             stage("Run custom") {
                 def customImage = docker.build("docker-socket-proxy:${env.BUILD_ID}", "-f docker-socket-proxy.Dockerfile .")
                 customImage.inside() {
