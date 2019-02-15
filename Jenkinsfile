@@ -20,12 +20,10 @@ pipeline {
                 echo currentBuild.result
             }
         }
-    }
-    agent {
-        docker { image 'node:7-alpine' }
-    }
-    stages {
-        stage('Test') {
+        stage('other') {
+            agent {
+                docker { image 'node:7-alpine' }
+            }
             steps {
                 sh 'node --version'
             }
