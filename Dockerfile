@@ -9,7 +9,7 @@ ADD https://download.docker.com/linux/fedora/docker-ce.repo /etc/yum.repos.d/doc
 # install jenkins and docker-ce client
 RUN rpm --import http://pkg.jenkins-ci.org/redhat/jenkins-ci.org.key \
  && yum update -y \
- && yum install -y jenkins java unzip findutils git docker-ce-cli \
+ && yum install -y jenkins java-1.8.0-openjdk-headless fontconfig unzip findutils git docker-ce-cli \
  && yum clean all \
  && rm -rf /var/cache/yum/*
 
