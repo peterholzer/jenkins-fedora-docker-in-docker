@@ -55,3 +55,4 @@ CMD cat /var/lib/jenkins/secrets/initialAdminPassword && \
 # docker run jenkins install-plugins.sh fancy-plugin:latest
 
 
+
