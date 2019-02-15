@@ -74,4 +74,17 @@ node {
             sh 'java -version'
         }
     }
+    stage("Run custom") {
+        // def customImage = docker.build("docker-socket-proxy:${env.BUILD_ID}", "-f docker-socket-proxy.Dockerfile .")
+        jenkins_img.withRun() { c ->
+            proxy_img.inside() {
+                sh 'uname'
+                sh 'sleep 1'
+            }
+            jenkins_img.inside("--link ${c.id}:db") {
+                sh 'uname'
+                sh 'java -version'
+            }
+        }
+    }
 }
