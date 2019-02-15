@@ -79,7 +79,7 @@ node {
         proxy_img.withRun('-v /var/run/docker.sock:/var/run/docker.sock') { d ->
             proxy_img.inside() {
                 sh 'uname'
-                sh 'sleep 1'
+                sh 'sleep 10'
             }
             jenkins_img.inside("--link ${d.id}:db") {
                 sh 'uname'
