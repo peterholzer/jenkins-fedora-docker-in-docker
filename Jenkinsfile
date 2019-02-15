@@ -84,7 +84,6 @@ node {
                 sh 'docker -v'
                 sh 'docker version'
             }
-            proxy_img.stop()
         }
         d.stop()
     }
