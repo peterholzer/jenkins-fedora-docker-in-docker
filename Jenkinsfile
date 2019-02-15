@@ -62,12 +62,12 @@ node {
                     sh 'uname'
                 }
             // }
-            /*stage("Run custom") {
+            stage("Run custom") {
                 def customImage = docker.build("docker-socket-proxy:${env.BUILD_ID}", "-f docker-socket-proxy.Dockerfile .")
                 customImage.inside() {
                     sh 'uname'
                 }
-            }*/
+            }
         }
     // }
 }
