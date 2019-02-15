@@ -13,14 +13,18 @@ RUN rpm --import http://pkg.jenkins-ci.org/redhat/jenkins-ci.org.key \
  && yum clean all \
  && rm -rf /var/cache/yum/*
 
+
+ENV JENKINS_HOME=/var/lib/jenkins/
+
 # Add scripts from git repo of the original Jenkins docker image
 ADD https://raw.githubusercontent.com/jenkinsci/docker/master/install-plugins.sh /usr/local/bin/install-plugins.sh
 ADD https://raw.githubusercontent.com/jenkinsci/docker/master/jenkins-support    /usr/local/bin/jenkins-support
+COPY ./docker                                                                    /usr/local/bin/docker
 RUN chmod 755 /usr/local/bin/*
+COPY ./basic-security.groovy ${JENKINS_HOME}/init.groovy.d/
 
 USER jenkins
 
-ENV JENKINS_HOME=/var/lib/jenkins/
 ENV REF=${JENKINS_HOME}/plugins/
 ENV JENKINS_UC="https://updates.jenkins.io"
 ENV JENKINS_UC_DOWNLOAD="http://mirrors.jenkins-ci.org"
@@ -38,7 +42,8 @@ VOLUME ${JENKINS_HOME}
 EXPOSE 8080
 
 ENV JENKINS_OPTS="--logfile=/dev/stdout --httpPort=8080 --debug=5 --handlerCountMax=100 --handlerCountMaxIdle=20"
-ENV JAVA_OPTS="-Djava.awt.headless=true -DJENKINS_HOME=${JENKINS_HOME}"
+# ENV JAVA_OPTS="-Djava.awt.headless=true -DJENKINS_HOME=${JENKINS_HOME}"
+ENV JAVA_OPTS="-Djava.awt.headless=true -DJENKINS_HOME=${JENKINS_HOME} -Djenkins.install.runSetupWizard=false"
 #  -Djenkins.install.runSetupWizard=false
 
 CMD cat /var/lib/jenkins/secrets/initialAdminPassword && \
