@@ -38,7 +38,7 @@ node {
     checkout scm
 
     stage("Build jenkins image") {
-            def customImage1 = docker.build("jenkins:${env.BUILD_ID}")
+        def customImage1 = docker.build("jenkins:${env.BUILD_ID}")
 
     }
     stage("Build docker-socket-proxy image") {
@@ -48,7 +48,7 @@ node {
         docker.image('mysql:5').withRun('-e "MYSQL_ROOT_PASSWORD=my-secret-pw"') { c ->
 
             stage("Run mysql") {
-                docker.image('mysql:5').inside("--link ${c.id}:db") {je
+                docker.image('mysql:5').inside("--link ${c.id}:db") {
                     /* Wait until mysql service is up */
                     sh 'while ! mysqladmin ping -hdb --silent; do sleep 1; done'
                 }
