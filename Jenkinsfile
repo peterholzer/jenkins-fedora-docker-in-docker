@@ -44,7 +44,7 @@ node {
     stage("Build docker-socket-proxy image") {
         def customImage = docker.build("docker-socket-proxy:${env.BUILD_ID}", "-f docker-socket-proxy.Dockerfile .")
     }
-    // stage("Setup mysql") {
+    stage("Setup mysql") {
         docker.image('mysql:5').withRun('-e "MYSQL_ROOT_PASSWORD=my-secret-pw"') { c ->
 
             // stage("Run mysql") {
@@ -62,12 +62,12 @@ node {
                     sh 'uname'
                 }
             // }
-            stage("Run custom") {
-                def customImage = docker.build("docker-socket-proxy:${env.BUILD_ID}", "-f docker-socket-proxy.Dockerfile .")
-                customImage.inside() {
-                    sh 'uname'
-                }
-            }
         }
-    // }
+    }
+    stage("Run custom") {
+        def customImage = docker.build("docker-socket-proxy:${env.BUILD_ID}", "-f docker-socket-proxy.Dockerfile .")
+        customImage.inside() {
+            sh 'uname'
+        }
+    }
 }
