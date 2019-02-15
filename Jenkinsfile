@@ -44,11 +44,11 @@ node {
     stage("Build docker-socket-proxy image") {
         def customImage = docker.build("docker-socket-proxy:${env.BUILD_ID}", "-f docker-socket-proxy.Dockerfile .")
     }
-    stage("Setup mysql") {
-        docker.image('mysql:5').withRun('-e "MYSQL_ROOT_PASSWORD=my-secret-pw"') { c ->
+    // stage("Setup mysql") {
+        docker.image('mysql:5').withRun('-e "MYSQL_ROOT_PASSWORD=my-secret-pw"') {
 
             stage("Run mysql") {
-                docker.image('mysql:5').inside("--link ${c.id}:db") {
+                c -> docker.image('mysql:5').inside("--link ${c.id}:db") {
                     /* Wait until mysql service is up */
                     sh 'while ! mysqladmin ping -hdb --silent; do sleep 1; done'
                 }
@@ -73,5 +73,5 @@ node {
                 }
             }
         }
-    }
+    // }
 }
