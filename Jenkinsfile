@@ -63,6 +63,7 @@ node {
                 }
             }
             stage("Run custom") {
+                def customImage = docker.build("docker-socket-proxy:${env.BUILD_ID}", "-f docker-socket-proxy.Dockerfile .")
                 customImage.inside("--link ${c.id}:db") {
                     /*
                      * Run some tests which require MySQL, and assume that it is
