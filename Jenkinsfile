@@ -37,6 +37,8 @@ pipeline {
 node {
     checkout scm
 
+
+
     stage("Setup mysql") {
         docker.image('mysql:5').withRun('-e "MYSQL_ROOT_PASSWORD=my-secret-pw"') { c ->
 
@@ -48,6 +50,16 @@ node {
             }
             stage("Run centos") {
                 docker.image('centos:7').inside("--link ${c.id}:db") {
+                    /*
+                     * Run some tests which require MySQL, and assume that it is
+                     * available on the host name `db`
+                     */
+                    sh 'uname'
+                }
+            }
+            stage("Run custom") {
+                def customImage = docker.build("my-image:${env.BUILD_ID}")
+                customImage.inside("--link ${c.id}:db") {
                     /*
                      * Run some tests which require MySQL, and assume that it is
                      * available on the host name `db`
