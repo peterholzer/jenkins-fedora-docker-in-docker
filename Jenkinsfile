@@ -37,14 +37,15 @@ pipeline {
 node {
     checkout scm
 
-    def customImage1
+    def jenkins_img
+    def proxy_img
 
     stage("Build jenkins image") {
-        customImage1 = docker.build("jenkins:${env.BUILD_ID}")
+        jenkins_img = docker.build("jenkins:${env.BUILD_ID}")
 
     }
     stage("Build docker-socket-proxy image") {
-        def customImage = docker.build("docker-socket-proxy:${env.BUILD_ID}", "-f docker-socket-proxy.Dockerfile .")
+        proxy_img = docker.build("docker-socket-proxy:${env.BUILD_ID}", "-f docker-socket-proxy.Dockerfile .")
     }
     stage("Setup mysql") {
         docker.image('mysql:5').withRun('-e "MYSQL_ROOT_PASSWORD=my-secret-pw"') { c ->
@@ -68,8 +69,9 @@ node {
     }
     stage("Run custom") {
         // def customImage = docker.build("docker-socket-proxy:${env.BUILD_ID}", "-f docker-socket-proxy.Dockerfile .")
-        customImage1.inside() {
+        jenkins_img.inside() {
             sh 'uname'
+            sh 'java -version'
         }
     }
 }
