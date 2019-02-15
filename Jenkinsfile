@@ -65,8 +65,8 @@ node {
         }
     }
     stage("Run custom") {
-        def customImage = docker.build("docker-socket-proxy:${env.BUILD_ID}", "-f docker-socket-proxy.Dockerfile .")
-        customImage.withRun.inside() {
+        // def customImage = docker.build("docker-socket-proxy:${env.BUILD_ID}", "-f docker-socket-proxy.Dockerfile .")
+        customImage1.inside() {
             sh 'uname'
         }
     }
