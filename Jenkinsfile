@@ -81,8 +81,11 @@ node {
             jenkins_img.inside("--link ${d.id}:db") {
                 sh 'uname'
                 sh 'java -version'
+                sh 'docker -v'
+                sh 'docker version'
             }
             proxy_img.stop()
         }
+        d.stop()
     }
 }
