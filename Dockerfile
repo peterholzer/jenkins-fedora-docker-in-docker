@@ -27,10 +27,11 @@ ENV JENKINS_UC_DOWNLOAD="http://mirrors.jenkins-ci.org"
 ENV JENKINS_UC_EXPERIMENTAL="https://updates.jenkins.io/experimental"
 # ENV JENKINS_INCREMENTALS_REPO_MIRROR=https://repo.jenkins-ci.org/incrementals
 
+WORKDIR ${JENKINS_HOME}
 
 # Install plugins
-COPY ./plugins.txt
-RUN install-plugins.sh < plugins.txt
+COPY ./plugins.txt ${JENKINS_HOME}/
+RUN install-plugins.sh < ${JENKINS_HOME}/plugins.txt
 
 VOLUME ${JENKINS_HOME}
 
@@ -40,7 +41,8 @@ ENV JENKINS_OPTS="--logfile=/dev/stdout --httpPort=8080 --debug=5 --handlerCount
 ENV JAVA_OPTS="-Djava.awt.headless=true -DJENKINS_HOME=${JENKINS_HOME}"
 #  -Djenkins.install.runSetupWizard=false
 
-CMD /usr/bin/java \
+CMD cat /var/lib/jenkins/secrets/initialAdminPassword && \
+    /usr/bin/java \
     ${JAVA_OPTS} \
     -jar /usr/lib/jenkins/jenkins.war \
     ${JENKINS_OPTS}
