@@ -13,7 +13,6 @@ RUN rpm --import http://pkg.jenkins-ci.org/redhat/jenkins-ci.org.key \
  && yum clean all \
  && rm -rf /var/cache/yum/*
 
-
 ENV JENKINS_HOME=/var/lib/jenkins/
 
 # Add scripts from git repo of the original Jenkins docker image
