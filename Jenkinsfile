@@ -11,11 +11,10 @@ pipeline {
                 sh 'docker -v'
             }
         }
-        stage('Test docker daemon') {
+        stage('Test docker daemon (always true)') {
             steps {
 
                 catchError {
-                    build job: 'system-check-flow'
                     sh 'docker version || true'
                 }
                 echo currentBuild.result
