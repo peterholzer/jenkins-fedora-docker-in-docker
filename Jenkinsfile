@@ -76,7 +76,7 @@ node {
     }
     stage("Run custom") {
         // def customImage = docker.build("docker-socket-proxy:${env.BUILD_ID}", "-f docker-socket-proxy.Dockerfile .")
-        jenkins_img.withRun() { c ->
+        jenkins_img.withRun('-v /var/run/docker.sock:/var/run/docker.sock') { c ->
             proxy_img.inside() {
                 sh 'uname'
                 sh 'sleep 1'
