@@ -84,7 +84,7 @@ node {
                 sh 'uname'
                 sh 'java -version'
                 sh 'docker -v'
-                // sh 'docker version'
+                sh 'docker version'
             }
             // d.stop()
         }
