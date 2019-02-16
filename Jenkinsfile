@@ -70,11 +70,11 @@ node {
         }
     }
     stage("check Proxy image docker") {
+        proxy_img.inside() {
         // proxy_img.inside('-v /var/run/docker.sock:/var/run/docker.sock') {
-        proxy_img.inside('-v /var/run/docker.sock:/var/run/docker.sock') {
             sh 'uname'
             sh 'docker -v'
-            sh 'docker version'
+            // sh 'docker version'
         }
     }
     stage("Run custom") {
