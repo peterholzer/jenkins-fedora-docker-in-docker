@@ -50,15 +50,13 @@ node {
     }
 
     stage("Run custom") {
-        proxy_img.withRun('-v /var/run/docker.sock:/var/run/docker.sock') { d ->
-            // proxy_img.run()
-            jenkins_img.inside("-e DOCKER_HOST=tcp://proxy --link ${d.id}:proxy") {
+        proxy_img.withRun('-v /var/run/docker.sock:/var/run/docker.sock') { prx ->
+            jenkins_img.inside("-e DOCKER_HOST=tcp://proxy1 --link ${prx.id}:proxy1") {
                 sh 'uname'
                 sh 'java -version'
                 sh 'docker -v'
                 sh 'docker version'
             }
-            // d.stop()
         }
     }
 }
