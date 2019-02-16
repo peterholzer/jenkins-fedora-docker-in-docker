@@ -86,7 +86,7 @@ node {
                 sh 'docker -v'
                 // sh 'docker version'
             }
+            d.stop()
         }
-        d.stop()
     }
 }
