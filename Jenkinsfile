@@ -54,9 +54,12 @@ node {
             jenkins_img.inside("-e DOCKER_HOST=tcp://proxy1 --link ${prx.id}:proxy1") {
                 sh 'uname'
                 sh 'java -version'
-                sh 'docker -v'
 
-                stage("Run docker connection test") {
+                stage("Test docker client binary") {
+                    sh 'docker -v'
+                }
+
+                stage("Test docker daemon connection") {
                     sh 'docker version'
                 }
             }
