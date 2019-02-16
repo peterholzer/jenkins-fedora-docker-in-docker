@@ -80,7 +80,7 @@ node {
     stage("Run custom") {
         proxy_img.withRun('-v /var/run/docker.sock:/var/run/docker.sock') { d ->
             // proxy_img.run()
-            jenkins_img.inside("--link ${d.id}:2375") {
+            jenkins_img.inside("-e DOCKER_HOST=tcp://${d.id} --link ${d.id}:2375") {
                 sh 'uname'
                 sh 'java -version'
                 sh 'docker -v'
