@@ -49,13 +49,16 @@ node {
         proxy_img = docker.build("docker-socket-proxy:${env.BUILD_ID}", "-f docker-socket-proxy.Dockerfile .")
     }
 
-    stage("Run custom") {
+    stage("Run tests") {
         proxy_img.withRun('-v /var/run/docker.sock:/var/run/docker.sock') { prx ->
             jenkins_img.inside("-e DOCKER_HOST=tcp://proxy1 --link ${prx.id}:proxy1") {
                 sh 'uname'
                 sh 'java -version'
                 sh 'docker -v'
-                sh 'docker version'
+
+                stage("Run docker connection test") {
+                    sh 'docker version'
+                }
             }
         }
     }
