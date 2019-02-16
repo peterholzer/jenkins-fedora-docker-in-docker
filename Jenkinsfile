@@ -67,14 +67,14 @@ node {
             // }
         }
     }
-    stage("Run custom") {
+    stage("Check Jenkins image Java") {
         // def customImage = docker.build("docker-socket-proxy:${env.BUILD_ID}", "-f docker-socket-proxy.Dockerfile .")
         jenkins_img.inside() {
             sh 'uname'
             sh 'java -version'
         }
     }
-    stage("Run custom") {
+    stage("check Proxy image docker") {
         // def customImage = docker.build("docker-socket-proxy:${env.BUILD_ID}", "-f docker-socket-proxy.Dockerfile .")
         proxy_img.inside('-v /var/run/docker.sock:/var/run/docker.sock') {
             sh 'uname'
