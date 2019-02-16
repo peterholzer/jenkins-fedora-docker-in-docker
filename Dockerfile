@@ -39,9 +39,10 @@ VOLUME ${JENKINS_HOME}
 
 EXPOSE 8080
 
-ENV JENKINS_OPTS="--logfile=/dev/stdout --httpPort=8080 --debug=5 --handlerCountMax=100 --handlerCountMaxIdle=20"
+ENV JENKINS_OPTS="--logfile=/dev/stdout --httpPort=8080 --prefix=/jenkins --debug=5 --handlerCountMax=100 --handlerCountMaxIdle=20"
 # ENV JAVA_OPTS="-Djava.awt.headless=true -DJENKINS_HOME=${JENKINS_HOME}"
 ENV JAVA_OPTS="-Djava.awt.headless=true -DJENKINS_HOME=${JENKINS_HOME} -Djenkins.install.runSetupWizard=false"
+# ENV JAVA_OPTS="-Djava.awt.headless=true -DJENKINS_HOME=${JENKINS_HOME} -Djenkins.install.runSetupWizard=false"
 #  -Djenkins.install.runSetupWizard=false
 
 CMD cat /var/lib/jenkins/secrets/initialAdminPassword && \
