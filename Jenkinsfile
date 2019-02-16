@@ -52,7 +52,7 @@ node {
 
             // stage("Run mysql") {
                 docker.image('mysql:5').inside("--link ${c.id}:db") {
-                    /* Wait until mysql service is up */
+                    // Wait until mysql service is up
                     sh 'while ! mysqladmin ping -hdb --silent; do sleep 1; done'
                 }
             // }
