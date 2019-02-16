@@ -1,4 +1,5 @@
-
+# https://engineering.riotgames.com/news/jenkins-ephemeral-docker-tutorial
+# https://github.com/maxfields2000/dockerjenkins_tutorial/blob/master/tutorial_07/docker-proxy/Dockerfile
 FROM fedora:29
 
 LABEL maintainer="Peter Holzer spam@h0lzer.com"

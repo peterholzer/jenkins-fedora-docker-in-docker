@@ -50,9 +50,4 @@ CMD cat /var/lib/jenkins/secrets/initialAdminPassword && \
     -jar /usr/lib/jenkins/jenkins.war \
     ${JENKINS_OPTS}
 
-# --webroot=/var/cache/jenkins/war
-# docker run -it jenkins bash
-# docker run jenkins install-plugins.sh fancy-plugin:latest
-
-
 
