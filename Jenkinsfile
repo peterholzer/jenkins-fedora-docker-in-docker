@@ -64,14 +64,13 @@ node {
         }
     }*/
     stage("Check Jenkins image Java") {
-        // def customImage = docker.build("docker-socket-proxy:${env.BUILD_ID}", "-f docker-socket-proxy.Dockerfile .")
         jenkins_img.inside() {
             sh 'uname'
             sh 'java -version'
         }
     }
     stage("check Proxy image docker") {
-        // def customImage = docker.build("docker-socket-proxy:${env.BUILD_ID}", "-f docker-socket-proxy.Dockerfile .")
+        // proxy_img.inside('-v /var/run/docker.sock:/var/run/docker.sock') {
         proxy_img.inside('-v /var/run/docker.sock:/var/run/docker.sock') {
             sh 'uname'
             sh 'docker -v'
@@ -79,7 +78,6 @@ node {
         }
     }
     stage("Run custom") {
-        // def customImage = docker.build("docker-socket-proxy:${env.BUILD_ID}", "-f docker-socket-proxy.Dockerfile .")
         proxy_img.withRun('-v /var/run/docker.sock:/var/run/docker.sock') { d ->
             proxy_img.run()
             jenkins_img.inside("--link ${d.id}:db") {
